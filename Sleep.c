@@ -26,14 +26,14 @@ typedef long     int        LONG;
 // 结构体定义
 typedef struct
 {
-	UINT8   second;     /* 0-59 */
-	UINT8   minute;     /* 0-59 */
-	UINT8   hour;       /* 0-23 */
-	UINT8   day;        /* 1-31 */
-	UINT8   month;      /* 1-12 */
-	UINT16  year;       /* 1994-2099 */
-	UINT8   week;       /* 1-7 */
-	UINT8   Count10ms;  /* 0-99 */
+    UINT8   second;     /* 0-59 */
+    UINT8   minute;     /* 0-59 */
+    UINT8   hour;       /* 0-23 */
+    UINT8   day;        /* 1-31 */
+    UINT8   month;      /* 1-12 */
+    UINT16  year;       /* 1994-2099 */
+    UINT8   week;       /* 1-7 */
+    UINT8   Count10ms;  /* 0-99 */
 } ClockStruc;
 
 
@@ -92,24 +92,24 @@ INT32 main()
 void GetCurrentTime(ClockStruc *ptClock)
 {
     LONG            iDate     = 0;
-	  struct tm      *ptTime    = NULL;
-	  struct timeval  t_timeval = {0};
+    struct tm      *ptTime    = NULL;
+    struct timeval  t_timeval = {0};
 
-	  gettimeofday(&t_timeval, NULL);
-	  iDate  = t_timeval.tv_sec;
-	  ptTime = localtime(&iDate);
-	  ptClock->Count10ms = t_timeval.tv_usec / 10000;
-  	ptClock->year      = (UINT16)(ptTime->tm_year + 1900);
-	  ptClock->month     = (UINT8)ptTime->tm_mon + 1;
-	  ptClock->day       = (UINT8)ptTime->tm_mday;
-	  ptClock->hour      = (UINT8)ptTime->tm_hour;
-  	ptClock->minute    = (UINT8)ptTime->tm_min;
-	  ptClock->second    = (UINT8)ptTime->tm_sec;
-	  ptClock->week      = (UINT8)ptTime->tm_wday;
-  	if (ptClock->week == 0)
-	  {
-	      ptClock->week = 7;
-	  }
+    gettimeofday(&t_timeval, NULL);
+    iDate  = t_timeval.tv_sec;
+    ptTime = localtime(&iDate);
+    ptClock->Count10ms = t_timeval.tv_usec / 10000;
+    ptClock->year      = (UINT16)(ptTime->tm_year + 1900);
+    ptClock->month     = (UINT8)ptTime->tm_mon + 1;
+    ptClock->day       = (UINT8)ptTime->tm_mday;
+    ptClock->hour      = (UINT8)ptTime->tm_hour;
+    ptClock->minute    = (UINT8)ptTime->tm_min;
+    ptClock->second    = (UINT8)ptTime->tm_sec;
+    ptClock->week      = (UINT8)ptTime->tm_wday;
+    if (ptClock->week == 0)
+    {
+        ptClock->week = 7;
+    }
 }
 
 
@@ -125,17 +125,17 @@ void GetCurrentTime(ClockStruc *ptClock)
 ********************************************************************/ 
 void Sleep(UINT32 iCountMs)
 {
-	  struct timeval t_timeout = {0};
+    struct timeval t_timeout = {0};
 
-  	if (iCountMs < 1000)
-  	{
-	      t_timeout.tv_sec  = 0;
-	      t_timeout.tv_usec = iCountMs * 1000;
-  	}
-  	else
-  	{
-	      t_timeout.tv_sec  = iCountMs / 1000;
-	      t_timeout.tv_usec = (iCountMs % 1000) * 1000;
-	  }
-  	select(0, NULL, NULL, NULL, &t_timeout);    // 调用select函数阻塞程序
+    if (iCountMs < 1000)
+    {
+        t_timeout.tv_sec  = 0;
+        t_timeout.tv_usec = iCountMs * 1000;
+    }
+    else
+    {
+        t_timeout.tv_sec  = iCountMs / 1000;
+        t_timeout.tv_usec = (iCountMs % 1000) * 1000;
+    }
+    select(0, NULL, NULL, NULL, &t_timeout);    // 调用select函数阻塞程序
 }

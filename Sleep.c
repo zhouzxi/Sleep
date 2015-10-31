@@ -58,17 +58,17 @@ INT32 main()
 	
     ClockStruc tClock = {0};
 	
-  	// 开始日期
+    // 开始日期
     GetCurrentTime(&tClock);
     // 打印开始时间(YYYY.MM.DD HH:MIN:SS)
     snprintf(szCurrentTime, sizeof(szCurrentTime) - 1, "%04d.%02d.%02d %02d:%02d:%02d", tClock.year, tClock.month, tClock.day,
                 tClock.hour, tClock.minute, tClock.second);
     printf("Begin time: %s\n", szCurrentTime);
 	
-	  // 休眠10s
+    // 休眠10s
     Sleep(10 * 1000);
 	
-  	// 结束日期
+    // 结束日期
     GetCurrentTime(&tClock);
     // 打印结束时间(YYYY.MM.DD HH:MIN:SS)
     snprintf(szCurrentTime, sizeof(szCurrentTime) - 1, "%04d.%02d.%02d %02d:%02d:%02d", tClock.year, tClock.month, tClock.day,
